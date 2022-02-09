@@ -30,12 +30,16 @@ func AskForColors(n int) bool {
 
 func win() {
 	fmt.Println("You win! Congratz")
-	fmt.Println("Right colors: ", game.GetAnswer())
-	fmt.Println("Your colors: ", board.GetBoard())
+	printAfterEnd()
 }
 
 func loose() {
 	fmt.Println("You loose, sorry :(")
+	printAfterEnd()
+
+}
+
+func printAfterEnd() {
 	fmt.Println("Right colors: ", game.GetAnswer())
 	fmt.Println("Your colors: ", board.GetBoard())
 }
@@ -73,4 +77,3 @@ func main() {
 		win()
 	}
 }
-
