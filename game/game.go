@@ -54,16 +54,25 @@ func StartGame() {
 }
 
 func CalculateHint(s string) string {
-	var temp string
+	var temp []string
+	var str string
 	black := countBlack(s)
 	white := countWhite(s)
 	for i := 0; i < black; i++ {
-		temp += "b"
+		temp = append(temp, "b")
 	}
 	for i := 0; i < white; i++ {
-		temp += "w"
+		temp = append(temp, "w")
 	}
-	return temp
+
+	rand.Shuffle(len(temp), func(i, j int) {
+		temp[i], temp[j] = temp[j], temp[i]
+	})
+
+	for i := 0; i < len(temp); i++ {
+		str += temp[i]
+	}
+	return str
 }
 
 func CheckIfWin(s string) bool {
