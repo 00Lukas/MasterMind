@@ -1,20 +1,20 @@
 package board
 
 const (
-	row        = 4
+	colors     = 4
 	col        = 10
 	emptyField = "0"
 )
 
 var (
-	board [col][row]string
+	board [col]string
 	//Available colors for the game
 	availableColors = []string{"w", "b", "r", "g", "p", "y"}
 )
 
 func colorsDuplicate(s string) bool {
 	x := make(map[string]int, 0)
-	for i := 0; i < row; i++ {
+	for i := 0; i < colors; i++ {
 		x[string(s[i])]++
 	}
 	for i := range x {
@@ -34,7 +34,7 @@ func checkColorsExist(s string) bool {
 			}
 		}
 	}
-	if count == row {
+	if count == colors {
 		return true
 	}
 	return false
@@ -42,26 +42,26 @@ func checkColorsExist(s string) bool {
 
 func ClearBoard() {
 	for i := 0; i < col; i++ {
-		for j := 0; j < row; j++ {
-			board[i][j] = emptyField
+		for j := 0; j < colors; j++ {
+			board[i] = emptyField
 		}
 	}
 }
 
 func AddColorsToBoard(n int, s string) bool {
-	if len(s) != row {
+	if len(s) != colors {
 		return false
 	}
 	if !checkColorsExist(s) || colorsDuplicate(s) {
 		return false
 	}
-	for i := 0; i < row; i++ {
-		board[n][i] = string(s[i])
+	for i := 0; i < colors; i++ {
+		board[n] = s
 	}
 	return true
 }
 
-func GetBoard() [col][row]string {
+func GetBoard() [col]string {
 	return board
 }
 
@@ -70,5 +70,5 @@ func GetAvailableColors() []string {
 }
 
 func GetColors() int {
-	return row
+	return colors
 }
