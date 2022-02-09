@@ -43,7 +43,7 @@ func checkColorsExist(s string) bool {
 func ClearBoard() {
 	for i := 0; i < col; i++ {
 		for j := 0; j < colors; j++ {
-			board[i] = emptyField
+			board[i] = EmptyField
 		}
 	}
 }
