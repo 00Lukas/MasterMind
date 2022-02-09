@@ -3,7 +3,7 @@ package board
 const (
 	colors     = 4
 	col        = 10
-	emptyField = "0"
+	EmptyField = "0"
 )
 
 var (

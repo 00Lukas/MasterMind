@@ -10,18 +10,20 @@ import (
 )
 
 const (
-	maxRound = 10
+	maxRound   = 10
+	emptyField = board.EmptyField
 )
 
 var (
-	hint  string
-	n     int
-	quess string
+	hint     string
+	n        int
+	quess    string
+	allHints [maxRound]string
 )
 
 func AskForColors(n int) bool {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Chose colors: ")
+	fmt.Printf("[%d] Chose colors: ", n+1)
 	col, _ := reader.ReadString('\n')
 	col = strings.TrimSpace(col)
 	quess = col
@@ -39,13 +41,27 @@ func loose() {
 
 }
 
+func clearHints() {
+	for i := 0; i < maxRound; i++ {
+		allHints[i] = emptyField
+	}
+}
+
 func printAfterEnd() {
 	fmt.Println("Right colors: ", game.GetAnswer())
-	fmt.Println("Your colors: ", board.GetBoard())
+	b := board.GetBoard()
+	h := allHints
+	for i := 0; i < maxRound; i++ {
+		if b[i] == emptyField {
+			break
+		}
+		fmt.Printf("[%d] Colors: %s\tHint: %s\n", i+1, b[i], h[i])
+	}
 }
 
 func newGame() bool {
 	game.StartGame()
+	clearHints()
 	n = 0
 	for n = 0; n < maxRound; n++ {
 		hint = ""
@@ -60,7 +76,8 @@ func newGame() bool {
 		if !game.CheckIfWin(quess) {
 			if n < maxRound {
 				hint = game.CalculateHint(quess)
-				fmt.Println("Hint: ", hint)
+				allHints[n] = hint
+				fmt.Printf("[%d] Hint: %s\n", n+1, hint)
 			}
 		} else {
 			return true
