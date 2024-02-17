@@ -34,10 +34,7 @@ func checkColorsExist(s string) bool {
 			}
 		}
 	}
-	if count == colors {
-		return true
-	}
-	return false
+	return count == colors 
 }
 
 func ClearBoard() {

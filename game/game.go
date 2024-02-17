@@ -1,9 +1,10 @@
 package game
 
 import (
-	"github.com/00Lukas/MasterMind/board"
 	"math/rand"
-	"time"
+	"strings"
+
+	"github.com/00Lukas/MasterMind/board"
 )
 
 var (
@@ -13,8 +14,6 @@ var (
 
 func randomColors() {
 	b := board.GetAvailableColors()
-	s := time.Now().UnixNano()
-	rand.Seed(s)
 	rand.Shuffle(len(b), func(i, j int) {
 		b[i], b[j] = b[j], b[i]
 	})
@@ -37,11 +36,9 @@ func countWhite(s string) int {
 	var count int
 	for i := 0; i < board.GetColors(); i++ {
 		for j := 0; j < board.GetColors(); j++ {
-			if i != j {
-				if string(answer[i]) == string(s[j]) {
-					count++
-					break
-				}
+			if i != j && string(answer[i]) == string(s[j]) {
+				count++
+				break
 			}
 		}
 	}
@@ -55,7 +52,6 @@ func StartGame() {
 
 func CalculateHint(s string) string {
 	var temp []string
-	var str string
 	black := countBlack(s)
 	white := countWhite(s)
 	for i := 0; i < black; i++ {
@@ -69,17 +65,11 @@ func CalculateHint(s string) string {
 		temp[i], temp[j] = temp[j], temp[i]
 	})
 
-	for i := 0; i < len(temp); i++ {
-		str += temp[i]
-	}
-	return str
+	return strings.Join(temp,"")
 }
 
 func CheckIfWin(s string) bool {
-	if countBlack(s) == board.GetColors() {
-		return true
-	}
-	return false
+	return countBlack(s) == board.GetColors() 
 }
 
 func GetAnswer() string {
